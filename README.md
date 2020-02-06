@@ -5,10 +5,10 @@ This repository provides two live scripts that walk you through the steps to dev
 ```matlab
 fC = 5;
 fD = 2;
-plotPhaseModulation(fC,fD,'./example/output.gif');
+plotPhaseModulation(fC,fD,'output.gif');
 ```
 
-![output.gif](output.gif)
+![output.gif](doc/output.gif)
 
 Comments are currently provided in Japanese only. English version will be provided if there's a need.
 
