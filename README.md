@@ -5,7 +5,7 @@ This repository provides two live scripts that walk you through the steps to dev
 ```matlab
 fC = 5;
 fD = 2;
-plotPhaseModulation(fC,fD,'output.gif');
+plotPhaseModulation(fC,fD,'./example/output.gif');
 ```
 
 ![output.gif](output.gif)
