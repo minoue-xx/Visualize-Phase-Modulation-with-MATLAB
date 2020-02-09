@@ -1,9 +1,10 @@
-# このプロットどうやって描いたの？：PM変調の図
+# このプロットどうやって描いたの？：PM（Phase Modulation）の図
 
 
 Copyright 2020 Michio Inoue
 
 
+# はじめに
 
 
 ![image_0.png](visualizePM_part1_images/image_0.png)
@@ -11,24 +12,26 @@ Copyright 2020 Michio Inoue
 
 
 
-こちら（[Wikipedia:位相変調](https://ja.wikipedia.org/wiki/%E4%BD%8D%E7%9B%B8%E5%A4%89%E8%AA%BF)）で図示されているものを MATLAB で再現します！
+こちら（[Wikipedia:位相変調](https://ja.wikipedia.org/wiki/%E4%BD%8D%E7%9B%B8%E5%A4%89%E8%AA%BF)）で表示されている位相変調の図。これを MATLAB で描ける？そんな声が聞こえてきた気がしたのでやってみました。
+
+
+## 記事のポイント
+
+
+4 つの Axes オブジェクトの配置や色付け、そしてそれぞれの Axes オブジェクトの点同士をつなぐ作業、Annotation オブジェクトの配置など・・基本要素が盛りだくさん。少し長いですが作成の過程を纏めました。
 
 
 
 
-4 つのAxes オブジェクトの配置や色付け、Annotation オブジェクトの配置など・・いろんな要素が絡んだいい練習課題でしたので、作成の過程を纏めました。
+読んだ後は、MATLAB のグラフィックスオブジェクトに対するハードルはぐっと下がるはず。
 
 
 
 
-読んだあと、MATLAB のグラフィックスオブジェクトに対するハードルはぐっと下がるはず。
+参照：[グラフィックス オブジェクトの取り扱い](https://jp.mathworks.com/help/matlab/learn_matlab/understanding-handle-graphics-objects.html)
 
 
-
-
-[グラフィックス オブジェクトの取り扱い](https://jp.mathworks.com/help/matlab/learn_matlab/understanding-handle-graphics-objects.html)
-
-
+  
 # まずはいろんな確認から
 ## 動くサインカーブ
 
@@ -74,23 +77,30 @@ for ii=1:N % 2波長分描きます。
 end
 ```
 
-![figure_1.png](visualizePM_part1_images/figure_1.png)
+
+![image_1.png](visualizePM_part1_images/image_1.png)
 
 
 
-できた。x 軸の値が固定という点がなんとなく気持ち悪いですが、これで行きます。
+
+できた。注：この GIF は `animateSimpleSineCurve.m` で作っています。
 
 
-  
+
+
+x 軸の値が固定という点がなんとなく気持ち悪いですが、これで行きます。
+
+
 ## Axes オブジェクトの枠
 
 
 プロットの枠もいい感じにしていきます。 [Axes オブジェクトのプロパティ](https://jp.mathworks.com/help/matlab/ref/matlab.graphics.axis.axes-properties.html) に何があるのか確認しながら進めます。
 
 
+### まずは軸ラベル
 
 
-まずは軸ラベル。これは簡単、`XTick` と `YTick` プロパティーを消しちゃえばOK。線も太くしたいので、`LineWidth` も触っておきます。
+これは簡単、`XTick` と `YTick` プロパティーを消しちゃえばOK。線も太くしたいので、`LineWidth` も触っておきます。
 
 
 ```matlab
@@ -99,13 +109,14 @@ handle_axes.YTick = [];
 handle_axes.LineWidth = 2;
 ```
 
-![figure_2.png](visualizePM_part1_images/figure_2.png)
+![figure_1.png](visualizePM_part1_images/figure_1.png)
 
 
 
 いい感じ。
 
 
+### 枠の色
 
 
 あと枠の色も変えたいときには・・`XColor`、`YColor` プロパティでした。とりあえず赤にしてみます。ちなみに `Color` プロパティは背景色。ついでにサイン派も赤く・太くしておきます。
@@ -118,7 +129,7 @@ handle_line.Color = 'red';
 handle_line.LineWidth = 2;
 ```
 
-![figure_3.png](visualizePM_part1_images/figure_3.png)
+![figure_2.png](visualizePM_part1_images/figure_2.png)
 
 
 
@@ -138,7 +149,7 @@ handle_line.LineWidth = 2;
 
 
 
-![image_1.png](visualizePM_part1_images/image_1.png)
+![image_2.png](visualizePM_part1_images/image_2.png)
 
 
 
@@ -159,13 +170,9 @@ handle_axesC = axes(handle_fig,'Position',[1,4,2,8]/13);
 handle_axesD = axes(handle_fig,'Position',[4,7,8,2]/13); 
 ```
 
-![figure_4.png](visualizePM_part1_images/figure_4.png)
+![figure_3.png](visualizePM_part1_images/figure_3.png)
 
-
-
-あれ、枠が下と左にしかない。
-
-
+## あれ、枠が下と左にしかない。
 
 
 これは `Box` プロパティ（'on' / 'off'）です。全部 'on' にしましょう。
@@ -178,7 +185,7 @@ handle_axesC.Box = 'on';
 handle_axesD.Box = 'on';
 ```
 
-![figure_5.png](visualizePM_part1_images/figure_5.png)
+![figure_4.png](visualizePM_part1_images/figure_4.png)
 
 
 
@@ -206,7 +213,7 @@ handle_axesA.XColor = 'none';
 handle_axesA.YColor = 'none';
 ```
 
-![figure_6.png](visualizePM_part1_images/figure_6.png)
+![figure_5.png](visualizePM_part1_images/figure_5.png)
 
 
 
@@ -267,13 +274,13 @@ handle_axesC.YLim = [0,4*pi]; % Axes C は縦向き
 handle_axesD.XLim = [0,4*pi];
 ```
 
-![figure_7.png](visualizePM_part1_images/figure_7.png)
+![figure_6.png](visualizePM_part1_images/figure_6.png)
 
   
-## おい、せっかくの設定を・・
+## あ、せっかくの設定が・・
 
 
-そう `plot` 関数ってこういうところあるんですよね。事前設定をリセットしちゃう。親切心なんでしょうが。こんな時にはただ従順に線を書く `line` 関数にしましょう。
+そう `plot` 関数ってこういうところあるんですよね。親切心なんでしょうが、事前設定をリセットしちゃう。こんな時にはただ従順に線を書く `line` 関数にしましょう。
 
 
 
@@ -319,5 +326,10 @@ for ii=1:N % 2波長分描きます。
 end
 ```
 
-![figure_8.png](visualizePM_part1_images/figure_8.png)
+![figure_7.png](visualizePM_part1_images/figure_7.png)
+
+
+
+形になってきました。
+
 

@@ -1,4 +1,4 @@
-# このプロットどうやって描いたの？：PM変調の図
+# このプロットどうやって描いたの？：PM（Phase Modulation）の図
 
 
 Copyright 2020 Michio Inoue
@@ -80,12 +80,13 @@ end
 ```
 
 
-こんな感じ。
+こんな感じで使います。
 
 
+## 使用例
 
 
-実際に使ってみます。
+実際に使ってみます。まずは何でもいいので 2 つプロットを描きます。`subplot` 関数使います。
 
 
 ```matlab
@@ -184,8 +185,17 @@ handle_axesB.Title.String = "$$\frac{\pi}{2}\sin\left(" + ...
 handle_annAB = annotation('line',[xAfig,xBfig],[yAfig,yBfig],'Color','green');
 handle_annAC = annotation('line',[xAfig,xCfig],[yAfig,yCfig],'Color','red');
 handle_annCD = annotation('line',[xCfig,xDfig],[yCfig,yDfig],'Color','blue');
+```
 
-% あとはデータを更新して動かすだけ！
+![figure_2.png](visualizePM_part2_images/figure_2.png)
+
+
+
+できた。
+
+
+## あとはデータを更新して動かすだけ！
+```matlab
 dt = 4*pi/N;
 for ii=1:N % 2波長分描きます。
     t = t0 + dt*ii;
@@ -226,11 +236,8 @@ for ii=1:N % 2波長分描きます。
 end
 ```
 
-![figure_2.png](visualizePM_part2_images/figure_2.png)
 
-
-
-できあがり。
+で OK. オブジェクトの数だけ（しかも X 座標と Y 座標それぞれに 1 行）行数が増えてしまうのはちょっと美しくないですが・・。
 
 
 # 仕上げ
@@ -256,7 +263,7 @@ grid(handle_axesD,'on');
 ```
 
 
-こんな感じで追加します。以下を実行すればできあがり！
+こんな感じで追加します。関数 `plotPhaseModulation.m` に盛り込みました。以下を実行すればできあがり！
 
 
 ```matlab
@@ -266,7 +273,9 @@ addpath('..\function\');
 plotPhaseModulation(fC,fD);
 ```
 
-![figure_3.png](visualizePM_part2_images/figure_3.png)
+
+![image_1.png](visualizePM_part2_images/image_1.png)
+
 
 
 
@@ -279,5 +288,22 @@ plotPhaseModulation(fC,fD);
 
 
 注：R2019b Update 2 では Live Script 上で実行するとエラーがでます。原因は分かりませんが、`getFrame` で Figure 画面をキャプチャすると、グラフィックスオブジェクトの一部に影響が出ている様子。ごちゃごちゃしすぎたか。ですので、コマンドラインで実行してください・・。
+
+
+# まとめ
+
+
+無事に位相変調できました！
+
+
+
+
+結構手間かかりましたが、沢山のオブジェクトを使うよい復習問題となりました。
+
+
+  
+
+
+他にもこれ描いてみて！なカッコいい図があればコメントください。できるだけ頑張ります。
 
 
